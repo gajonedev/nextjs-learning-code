@@ -12,6 +12,10 @@ export default async function InvoicesTable({
   currentPage: number;
 }) {
   const invoices = await fetchFilteredInvoices(query, currentPage);
+  
+  if (invoices?.length === 0) {
+    return <div>No invoice founded</div>
+  }
 
   return (
     <div className="mt-6 flow-root">
