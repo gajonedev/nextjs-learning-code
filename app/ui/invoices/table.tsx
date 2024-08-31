@@ -1,3 +1,7 @@
+/**
+ * Contient le tableau d'affichage des Invoices
+ */
+
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
@@ -11,9 +15,11 @@ export default async function InvoicesTable({
   query: string;
   currentPage: number;
 }) {
+  // On récupère les Invoices triés par ordre de recherche et de pagination
   const invoices = await fetchFilteredInvoices(query, currentPage);
   
   if (invoices?.length === 0) {
+    // Si pas d'invoices ...
     return <div>No invoice founded</div>
   }
 
@@ -21,6 +27,7 @@ export default async function InvoicesTable({
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          {/* Mode d'affichage sur ecran mobile */}
           <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
@@ -58,6 +65,8 @@ export default async function InvoicesTable({
               </div>
             ))}
           </div>
+
+          {/* Mode d'affichage sur écran desktop */}
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>

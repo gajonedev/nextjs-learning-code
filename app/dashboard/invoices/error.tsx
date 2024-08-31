@@ -1,3 +1,8 @@
+/**
+ * Page d'erreur en cas d'erreur lors de la récupération d'invoice ou autre
+ * !Client Component
+ */
+
 "use client";
 
 import { useEffect } from "react";

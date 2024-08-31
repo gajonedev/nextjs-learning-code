@@ -1,7 +1,12 @@
-// Loading animation
+/**
+ * Contient tout les skeletons de chargement des différents composants et pages
+ */
+
+// Animation shimmer
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 
+// Skeleton d'un Card
 export function CardSkeleton() {
   return (
     <div
@@ -18,6 +23,7 @@ export function CardSkeleton() {
   );
 }
 
+// Skeleton de tout les Cards
 export function CardsSkeleton() {
   return (
     <>
@@ -29,6 +35,7 @@ export function CardsSkeleton() {
   );
 }
 
+// Skeleton du Chart des revenues
 export function RevenueChartSkeleton() {
   return (
     <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
@@ -44,6 +51,7 @@ export function RevenueChartSkeleton() {
   );
 }
 
+// Skeleton d'un invoice
 export function InvoiceSkeleton() {
   return (
     <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
@@ -59,6 +67,7 @@ export function InvoiceSkeleton() {
   );
 }
 
+// Skeleton des derniers invoices
 export function LatestInvoicesSkeleton() {
   return (
     <div
@@ -82,6 +91,7 @@ export function LatestInvoicesSkeleton() {
   );
 }
 
+// Skeleton du dashboard
 export default function DashboardSkeleton() {
   return (
     <>
@@ -102,6 +112,7 @@ export default function DashboardSkeleton() {
   );
 }
 
+// Skeleton du tableau d'affichage des customers
 export function TableRowSkeleton() {
   return (
     <tr className="w-full border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
@@ -139,6 +150,7 @@ export function TableRowSkeleton() {
   );
 }
 
+// Skeleton des invoices sur Mobile
 export function InvoicesMobileSkeleton() {
   return (
     <div className="mb-2 w-full rounded-md bg-white p-4">
@@ -163,6 +175,7 @@ export function InvoicesMobileSkeleton() {
   );
 }
 
+// Skeleton du tableau des invoices
 export function InvoicesTableSkeleton() {
   return (
     <div className="mt-6 flow-root">

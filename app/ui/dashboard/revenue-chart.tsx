@@ -1,7 +1,10 @@
+/**
+ * Graphe représentant les données des revenues sur le dashboard
+ */
+
 import { generateYAxis } from "@/app/lib/utils";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
-import { Revenue } from "@/app/lib/definitions";
 import { fetchRevenue } from "@/app/lib/data";
 
 // This component is representational only.
@@ -11,8 +14,9 @@ import { fetchRevenue } from "@/app/lib/data";
 // https://airbnb.io/visx/
 
 export default async function RevenueChart() {
-  
+  // On récupère les revenues
   const revenue = await fetchRevenue()
+  // On défint la hauteur du graphe
   const chartHeight = 350;
 
   const { yAxisLabels, topLabel } = generateYAxis(revenue);

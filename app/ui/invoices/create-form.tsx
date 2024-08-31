@@ -1,3 +1,8 @@
+/**
+ * Formulaire pour créer un invoice
+ * !Client Component
+ */
+
 "use client";
 
 import { CustomerField } from "@/app/lib/definitions";
@@ -11,10 +16,16 @@ import {
 import { Button } from "@/app/ui/button";
 import { createInvoice, State } from "@/app/lib/actions";
 import { useActionState } from "react";
+import { Loader } from "@/app/ui/components/Loader";
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  // L'état initial de la réponse de l'action du formulaire avant la première soumission
   const initialState: State = { message: null, errors: {} };
-  const [state, formAction] = useActionState(createInvoice, initialState);
+  // On gère l'action du formulaire avec le hook useActionState
+  const [state, formAction, isPending] = useActionState(
+    createInvoice,
+    initialState
+  );
 
   return (
     <form action={formAction}>
@@ -35,6 +46,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               <option value="" disabled>
                 Select a customer
               </option>
+              {/* On affiche les customers disponibles */}
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.name}
@@ -44,6 +56,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
           <div id="customer-error" aria-live="polite" aria-atomic="true">
+            {/* Affichage d'erreur de soumission du formulaire au niveau du CustomerId si disponible */}
             {state.errors?.customerId &&
               state.errors.customerId.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
@@ -73,8 +86,9 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
             </div>
           </div>
           <div id="amount-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.customerId &&
-              state.errors.customerId.map((error: string) => (
+            {/* Affichage d'erreur de soumission du formulaire au niveau du Amount si disponible */}
+            {state.errors?.amount &&
+              state.errors.amount.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -123,8 +137,9 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               </div>
             </div>
             <div id="amount-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.customerId &&
-                state.errors.customerId.map((error: string) => (
+              {/* Affichage d'erreur de soumission du formulaire au niveau du CustomerId si disponible */}
+              {state.errors?.status &&
+                state.errors.status.map((error: string) => (
                   <p className="mt-2 text-sm text-red-500" key={error}>
                     {error}
                   </p>
@@ -133,6 +148,12 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </div>
         </fieldset>
       </div>
+      <div id="form-error" aria-live="polite" aria-atomic="true">
+        {/* Affichage d'erreur de soumission du formulaire si disponible */}
+        {state.message && (
+          <p className="mt-2 text-sm text-red-500">{state.message}</p>
+        )}
+      </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/invoices"
@@ -140,7 +161,19 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button
+          className={`${isPending && "pointer-events-none"}`}
+          type="submit"
+        >
+          {isPending ? (
+            <>
+              <Loader />
+              {"Creating..."}
+            </>
+          ) : (
+            "Create Invoice"
+          )}
+        </Button>
       </div>
     </form>
   );

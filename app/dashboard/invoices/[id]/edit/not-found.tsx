@@ -1,3 +1,7 @@
+/**
+ * Page d'erreur 404 en cas d'invoice non trouvé
+ */
+
 import { FaceFrownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 

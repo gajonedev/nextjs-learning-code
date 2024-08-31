@@ -1,3 +1,7 @@
+/**
+ * Contient la logique de protection des routes par authentification
+ */
+
 import type { NextAuthConfig } from "next-auth";
 
 export const authConfig = {

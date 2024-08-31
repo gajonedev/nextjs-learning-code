@@ -1,12 +1,17 @@
+/**
+ * Contient l'ensemble des Cards d'affichage du total des options
+ */
+
 import {
   BanknotesIcon,
   ClockIcon,
   UserGroupIcon,
   InboxIcon,
-} from '@heroicons/react/24/outline';
-import { lusitana } from '@/app/ui/fonts';
-import { fetchCardData } from '@/app/lib/data';
+} from "@heroicons/react/24/outline";
+import { lusitana } from "@/app/ui/fonts";
+import { fetchCardData } from "@/app/lib/data";
 
+// Objet contenant les icones spécifiques
 const iconMap = {
   collected: BanknotesIcon,
   customers: UserGroupIcon,
@@ -14,7 +19,9 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
+// Fonction contenant tout les cards individuels
 export default async function CardWrapper() {
+  // On récupère les totals des options spécifiques
   const {
     numberOfInvoices,
     numberOfCustomers,
@@ -36,6 +43,7 @@ export default async function CardWrapper() {
   );
 }
 
+// Composant représentant un Card individuel
 export function Card({
   title,
   value,
@@ -43,8 +51,9 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  type: "invoices" | "customers" | "pending" | "collected";
 }) {
+  // On choisi l'icône du Card en fonction de son type 
   const Icon = iconMap[type];
 
   return (

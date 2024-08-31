@@ -1,7 +1,12 @@
+/**
+ * Boutons de manipulations des invoices
+ */
+
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { deleteInvoice } from "@/app/lib/actions";
 
+// Bouton pour créer un invoice
 export function CreateInvoice() {
   return (
     <Link
@@ -14,6 +19,7 @@ export function CreateInvoice() {
   );
 }
 
+// Bouton pour mettre à jour un invoice
 export function UpdateInvoice({ id }: { id: string }) {
   return (
     <Link
@@ -25,7 +31,9 @@ export function UpdateInvoice({ id }: { id: string }) {
   );
 }
 
+// Bouton pout supprimer un invoice
 export function DeleteInvoice({ id }: { id: string }) {
+  // La logique à executer pour supprimer le invoice
   const deleteInvoiceWithId = deleteInvoice.bind(null, id);
 
   return (
