@@ -91,7 +91,7 @@ export default function LoginForm() {
           ) : (
             <>
               <Loader />
-              {"Signin in..."}
+              {"Logging in..."}
             </>
           )}
         </Button>
