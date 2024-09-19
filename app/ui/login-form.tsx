@@ -19,13 +19,6 @@ import { Loader } from "./components/Loader";
 
 // Fonction principale de l'application
 export default function LoginForm() {
-  // On utilise le hook useActionState() pour gérer l'état du formualaire
-  /**
-   * useActionState()
-   * "authenticate" est la fonction à appeler à la soumission du formulaire
-   * "undefined" est l'état par defaut du "errorMessage"
-   * "errorMessage" est la valeur de retour de la fonction appélée lors de la soumission du formulaire
-   */
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
@@ -82,17 +75,16 @@ export default function LoginForm() {
           className={`mt-4 w-full ${
             isPending && "cursor-not-allowed pointer-events-none"
           }`}
-          aria-disabled={isPending}
         >
           {!isPending ? (
             <>
               Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
             </>
           ) : (
-            <>
+            <div className="flex gap-6">
               <Loader />
-              {"Logging in..."}
-            </>
+              <span>{"Logging in..."}</span>
+            </div>
           )}
         </Button>
         <div

@@ -13,9 +13,6 @@ import {
 } from "./definitions";
 import { formatCurrency } from "./utils";
 
-
-// ==================================================================== //
-
 // Fonction pour récupérer les revenues depuis la base de données
 export async function fetchRevenue() {
   try {
@@ -33,9 +30,6 @@ export async function fetchRevenue() {
   }
 }
 
-
-// ==================================================================== //
-
 // Fonction pour récupérer les latest invoices depuis la base de données
 export async function fetchLatestInvoices() {
   try {
@@ -51,22 +45,16 @@ export async function fetchLatestInvoices() {
 
     // On optimise les latest invoices en convertissant leurs amount de manière appropriée
     const latestInvoices = data.rows.map((invoice) => ({
-      // On spread tout les latest invoices
       ...invoice,
-      // On convertit leurs amount
       amount: formatCurrency(invoice.amount),
     }));
-    // On retourne les latestInvoices optimisés
+
     return latestInvoices;
   } catch (error) {
-    // En cas d'erreur ...
     console.error("Database Error:", error);
     throw new Error("Failed to fetch the latest invoices.");
   }
 }
-
-
-// ==================================================================== //
 
 // Fonction pour recupérer les totaux des options spécifiques depuis la base de donneés
 export async function fetchCardData() {
@@ -117,11 +105,6 @@ export async function fetchCardData() {
   }
 }
 
-
-// ==================================================================== //
-
-// Logique pour afficher de les invoices de manière filtée en utilisant la pagination et la recherche
-
 // Nombre d'invoice par page
 const ITEMS_PER_PAGE = 6;
 // Fonction de requêtage de la base de donneés
@@ -164,9 +147,6 @@ export async function fetchFilteredInvoices(
   }
 }
 
-
-// ==================================================================== //
-
 // Fonction pour récupérer le nombre total de pages à afficher pour les invoices
 export async function fetchInvoicesPages(query: string) {
   try {
@@ -193,9 +173,6 @@ export async function fetchInvoicesPages(query: string) {
     throw new Error("Failed to fetch total number of invoices.");
   }
 }
-
-
-// ==================================================================== //
 
 // Fonction pour récupérer une seule Invoice via son id
 export async function fetchInvoiceById(id: string) {
@@ -227,9 +204,6 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
-
-// ==================================================================== //
-
 // Fonction pour récupérer tous les customers disponibles
 export async function fetchCustomers() {
   try {
@@ -253,9 +227,6 @@ export async function fetchCustomers() {
     throw new Error("Failed to fetch all customers.");
   }
 }
-
-
-// ==================================================================== //
 
 export async function fetchFilteredCustomers(query: string) {
   try {

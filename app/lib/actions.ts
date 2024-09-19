@@ -96,14 +96,12 @@ export async function createInvoice(prevState: State, formData: FormData) {
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split("T")[0];
 
-  // ?Insertion des données dans la base de données
   try {
     await sql`
       INSERT INTO invoices (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
-    // !En cas d'erreur, on retourne une erreur
     return {
       message: "Database Error: Failed to Create Invoice.",
     };
@@ -144,7 +142,6 @@ export async function updateInvoice(
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
 
-  // ?Modification des données dans la base de données
   try {
     await sql`
       UPDATE invoices
@@ -152,7 +149,6 @@ export async function updateInvoice(
       WHERE id = ${id}
     `;
   } catch (error) {
-    // !En cas d'erreur, on retourne une erreur
     return {
       message: "Database error: Failed to Update invoice.",
     };
@@ -169,14 +165,10 @@ export async function updateInvoice(
 // Fonction pour supprimer un invoice
 export async function deleteInvoice(id: string) {
   try {
-    // Logique pour requêter la base de données
     await sql`DELETE FROM invoices WHERE id = ${id}`;
-    // Réinitialiser le cache du chemin spécifié
     revalidatePath("/dashboard/invoices");
-    // Retourner un message de confirmation
     return { message: "Deleted Invoice." };
   } catch (error) {
-    // En cas d'erreur ...
     return { message: "Database Error: Failed to Delete Invoice." };
   }
 }

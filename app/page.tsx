@@ -19,10 +19,10 @@ export default function Page() {
           <div className={`relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black`} />
           <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}>
             <strong>Welcome to Acme.</strong> This is the example for the{" "}
-            <a href="https://nextjs.org/learn/" className="text-blue-500" target="_blank">
+            <a>
               Next.js Learn Course
             </a>
-            , brought to you by Vercel.
+            , brought to you by Vercel and build by <a href="https://facebook.com/gajonedev" className="text-blue-500" target="_blank">Gajone Dev.</a>
           </p>
           <Link
             href="/login"

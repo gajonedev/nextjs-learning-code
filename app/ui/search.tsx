@@ -21,7 +21,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   // Logique pour changer l'URL dynamiquement et effectuer les recherches 
   const handleSearch = useDebouncedCallback((input: string) => {
-    // On instance un nouveau URLSearchParams pour modifier la les paramètres de recherche
     const params = new URLSearchParams(searchParams);
 
     // On initie le paramètre "page" à "1"

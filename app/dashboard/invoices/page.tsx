@@ -17,9 +17,7 @@ export const metadata: Metadata = {
   title: "Invoices",
 };
 
-// Composant fonction principale de la page
 export default async function Page({
-  // On utilise la prop native searchParams de Nextjs pour récupérer les paramètre de recherche dans l'URL courante
   searchParams,
 }: {
   searchParams?: {
