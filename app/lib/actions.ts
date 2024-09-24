@@ -86,22 +86,21 @@ export async function register(
       INSERT INTO users (name, email, password)
       VALUES (${username}, ${email}, ${hashedPassword})
     `;
-
-    await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-      callbackUrl: "/dashboard",
-    });
-
-    return {
-      message: "User registered successfully",
-    };
   } catch (error) {
     console.log(error);
     return {
       message: `${error}`,
     };
+  }
+
+  await signIn("credentials", {
+    email,
+    password,
+    callbackUrl: "/dashboard",
+  })
+
+  return {
+    message: "User registered successfully"
   }
 }
 
