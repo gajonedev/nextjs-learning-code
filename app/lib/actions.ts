@@ -77,6 +77,9 @@ export async function register(
 
   const { username, email, password } = validatedFields.data;
   const hashedPassword = await bcrypt.hash(password, 10);
+  const loginFormData = new FormData();
+  loginFormData.append("email", email);
+  loginFormData.append("password", password);
 
   try {
     await sql`
@@ -84,17 +87,13 @@ export async function register(
       VALUES (${username}, ${email}, ${hashedPassword})
     `;
 
-    await signIn("credentials", {
-      email: email,
-      password: password,
-      redirectTo: "/dashboard",
-    });
+    await signIn("credentials", loginFormData);
 
-    return { message: "Inscription et connexion réussie" };
+    redirect("/dashboard")
   } catch (error) {
     console.log(error);
     return {
-      message: "Echec de l'inscription, une erreur inattendue s'est produite.",
+      message: `${error}`,
     };
   }
 }
