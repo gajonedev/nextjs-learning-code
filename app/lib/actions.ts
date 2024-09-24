@@ -87,9 +87,16 @@ export async function register(
       VALUES (${username}, ${email}, ${hashedPassword})
     `;
 
-    await signIn("credentials", loginFormData);
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+      callbackUrl: "/dashboard",
+    });
 
-    redirect("/dashboard")
+    return {
+      message: "User registered successfully",
+    };
   } catch (error) {
     console.log(error);
     return {
