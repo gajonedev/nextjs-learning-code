@@ -1,6 +1,6 @@
 /**
  * Contient toute la logique d'interactions entre l'utilisateur et la base de données de l'application
- * ?Server Component 
+ * ?Server Component
  */
 
 "use server";
@@ -11,6 +11,7 @@ import { AuthError } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
 // Fonction pour gérer la connexion et authentifier l'utilisateur
 export async function authenticate(
@@ -34,32 +35,88 @@ export async function authenticate(
   }
 }
 
+// Schéma pour les données du formulaire d'inscription
+const RegistrationSchema = z.object({
+  username: z
+    .string()
+    .min(3, "Le nom d'utilisateur doit conetenir aun moins 3 caractères"),
+  email: z.string({}).email("Addresse email invalide"),
+  password: z
+    .string()
+    .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+});
+
+// Type des données de renvoie de l'inscription
+export type RegistrationType = {
+  errors?: {
+    username?: string[];
+    email?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+
+// Fonction pour enregistrer un utilisateur
+export async function register(
+  prevState: RegistrationType,
+  formData: FormData
+) {
+  // On valide les données du formulaire avec zod
+  const validatedFields = RegistrationSchema.safeParse({
+    username: formData.get("username"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Inscription échouée, les données entrées sont invalides",
+    };
+  }
+
+  const { username, email, password } = validatedFields.data;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    await sql`
+      INSERT INTO users (name, email, password)
+      VALUES (${username}, ${email}, ${hashedPassword})
+    `;
+
+    await signIn("credentials", {
+      email: email,
+      password: password,
+      redirectTo: "/dashboard",
+    });
+
+    return { message: "Inscription et connexion réussie" };
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "Echec de l'inscription, une erreur inattendue s'est produite.",
+    };
+  }
+}
+
 export async function logOut() {
-  await signOut()
+  await signOut();
 }
 
 // On définit le schéma du contenu du fomulaire de création ou d'édition d'invoice avec Zod
 const FormSchema = z.object({
-  // l'ID sera de type string
   id: z.string(),
-  // le customerId sera de type string et affichera une erreur si elle est vide
   customerId: z.string({
     invalid_type_error: "Please select a customer.",
   }),
-  // l'amount sera de type string et sera supérieur à 0
   amount: z.coerce
     .number()
     .gt(0, { message: "Please enter an amount greater than $0" }),
-  // le status sera "pending" ou "paid" et affichera un erreur si elle n'est pas sélectionnée
   status: z.enum(["pending", "paid"], {
     invalid_type_error: "Please select an invoice status.",
   }),
-  // le date sera de type string
   date: z.string(),
 });
-
-
-/* ========================================================================================== */
 
 // Logique pour créer un nouvel invoice
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
@@ -91,7 +148,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
     };
   }
 
-  // On prepare les donées pour leur insertion dans la base de données
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split("T")[0];
@@ -111,7 +167,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");
 }
-
 
 /* ========================================================================================== */
 
@@ -158,9 +213,6 @@ export async function updateInvoice(
   revalidatePath("/dashboard/invoices");
   redirect("/dashboard/invoices");
 }
-
-
-/* ========================================================================================== */
 
 // Fonction pour supprimer un invoice
 export async function deleteInvoice(id: string) {

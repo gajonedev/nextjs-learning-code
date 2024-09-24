@@ -10,27 +10,18 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function Search({ placeholder }: { placeholder: string }) {
-  // Logique pour effectuer les recherches dynamiquement lors de la saisie de la requête
-
-  // On récupère les paramètres de recherche actuels dans l'URL
   const searchParams = useSearchParams();
-  // On récupère l'adresse URL actuelle
   const pathname = usePathname();
-  // On selectionne la methode "replace" de useRouter() pour changer l'URL dynamiquement
   const { replace } = useRouter();
 
   // Logique pour changer l'URL dynamiquement et effectuer les recherches 
   const handleSearch = useDebouncedCallback((input: string) => {
     const params = new URLSearchParams(searchParams);
-
-    // On initie le paramètre "page" à "1"
     params.set("page", "1");
 
     if (input) {
-      // Si le champ de saisie n'est pas vide, modifier le paramètre "query" à la valeur du champ de saise
       params.set("query", input);
     } else {
-      // Sinon, supprimer le paramètre "query"
       params.delete("query");
     }
 
