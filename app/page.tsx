@@ -16,26 +16,39 @@ export default function Page() {
       {/* La Hero section */}
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
-          <div className={`relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black`} />
-          <p className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}>
+          <div
+            className={`relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black`}
+          />
+          <p
+            className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
+          >
             <strong>Welcome to Acme.</strong> This is the example for the{" "}
-            <a>
+            <a href="https://nextjs.org/learn" target="_blank">
               Next.js Learn Course
             </a>
-            , brought to you by Vercel and build by <a href="https://facebook.com/gajonedev" className="text-blue-500" target="_blank">Gajone Dev.</a>
+            , brought to you by Vercel and build by{" "}
+            <a
+              href="https://free.facebook.com/gajonedev"
+              className="text-blue-500"
+              target="_blank"
+            >
+              Gajone Dev.
+            </a>
           </p>
           <Link
             href="/login"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
           >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            {/* <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" /> */}
+            Log In
           </Link>
-          {/* <Link
-            href="/dashboard"
-            className="flex items-center gap-5 self-start rounded-lg bg-white px-6 py-3 text-sm font-medium text-blue-500 border border-blue-500 transition-colors hover:bg-blue-500 hover:text-white hover:border-gray-50 md:text-base"
+          <p className="text-gray-700">or</p>
+          <Link
+            href="/register"
+            className="flex items-center gap-5 self-start rounded-lg bg-white px-6 py-3 text-sm font-medium text-blue-500 border border-blue-500 transition-colors hover:bg-blue-200 md:text-base"
           >
-            <span>Dashboard</span> <TableCellsIcon className="w-5 md:w-6" />
-          </Link> */}
+            Register
+          </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           {/* Add Hero Images Here */}
