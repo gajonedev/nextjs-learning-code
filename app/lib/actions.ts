@@ -77,9 +77,9 @@ export async function register(
 
   const { username, email, password } = validatedFields.data;
   const hashedPassword = await bcrypt.hash(password, 10);
-  const loginFormData = new FormData();
-  loginFormData.append("email", email);
-  loginFormData.append("password", password);
+  // const loginFormData = new FormData();
+  // loginFormData.append("email", email);
+  // loginFormData.append("password", password);
 
   try {
     await sql`
@@ -96,12 +96,9 @@ export async function register(
   await signIn("credentials", {
     email,
     password,
-    callbackUrl: "/dashboard",
   })
 
-  return {
-    message: "User registered successfully"
-  }
+  window.location.reload()
 }
 
 export async function logOut() {

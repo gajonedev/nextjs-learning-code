@@ -1,6 +1,6 @@
 /**
  * Page d'affichage des commandes, avec pagination
- */ 
+ */
 
 import { lusitana } from "@/app/ui/fonts";
 import { CreateInvoice } from "@/app/ui/invoices/buttons";
