@@ -99,6 +99,7 @@ export async function register(
   })
 
   window.location.reload()
+return { message : "Reussie" }
 }
 
 export async function logOut() {
