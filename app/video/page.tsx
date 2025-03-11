@@ -2,17 +2,7 @@
 
 import { useState, useRef, MouseEvent } from 'react';
 
-interface VideoPlayerProps {
-  title?: string;
-  description?: string;
-  videoUrl?: string;
-}
-
-const VideoPage: React.FC<VideoPlayerProps> = ({
-  title = "Titre de la vidéo",
-  description = "Description de votre vidéo. Vous pouvez ajouter ici tous les détails pertinents concernant votre contenu vidéo.",
-  videoUrl = "/video.mp4"
-}) => {
+const VideoPage = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -45,7 +35,7 @@ const VideoPage: React.FC<VideoPlayerProps> = ({
             onClick={togglePlay}
           >
             <source 
-              src={videoUrl} 
+              src="/video.mp4" 
               type="video/mp4" 
             />
             Votre navigateur ne supporte pas la lecture de vidéos.
@@ -84,10 +74,10 @@ const VideoPage: React.FC<VideoPlayerProps> = ({
         {/* Description */}
         <div className="max-w-4xl mx-auto mt-8 p-6 bg-gray-800/50 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">
-            {title}
+            Titre
           </h2>
           <p className="text-gray-300">
-            {description}
+            Description
           </p>
         </div>
       </div>
