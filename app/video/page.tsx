@@ -1,12 +1,23 @@
 "use client"
 
-import { useState, useRef } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 
-export default function VideoPage() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef(null);
+interface VideoPlayerProps {
+  title?: string;
+  description?: string;
+  videoUrl?: string;
+}
 
-  const togglePlay = () => {
+const VideoPage: React.FC<VideoPlayerProps> = ({
+  title = "Titre de la vidéo",
+  description = "Description de votre vidéo. Vous pouvez ajouter ici tous les détails pertinents concernant votre contenu vidéo.",
+  videoUrl = "/video.mp4"
+}) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const togglePlay = (e: MouseEvent<HTMLButtonElement | HTMLVideoElement>): void => {
+    e.stopPropagation();
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -34,7 +45,7 @@ export default function VideoPage() {
             onClick={togglePlay}
           >
             <source 
-              src="/video.mp4" 
+              src={videoUrl} 
               type="video/mp4" 
             />
             Votre navigateur ne supporte pas la lecture de vidéos.
@@ -46,6 +57,8 @@ export default function VideoPage() {
             <button
               onClick={togglePlay}
               className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300"
+              type="button"
+              aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
                 <span className="h-4 w-4 border-l-2 border-white ml-1"></span>
@@ -71,13 +84,15 @@ export default function VideoPage() {
         {/* Description */}
         <div className="max-w-4xl mx-auto mt-8 p-6 bg-gray-800/50 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl md:text-2xl font-semibold mb-4">
-            Titre de la vidéo
+            {title}
           </h2>
           <p className="text-gray-300">
-            Description de votre vidéo. Vous pouvez ajouter ici tous les détails pertinents concernant votre contenu vidéo.
+            {description}
           </p>
         </div>
       </div>
     </div>
   );
-        }
+};
+
+export default VideoPage;
