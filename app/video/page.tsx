@@ -32,7 +32,7 @@ export default function VideoPage() {
             onClick={togglePlay}
           >
             <source 
-              src="/chemin-vers-votre-video.mp4" 
+              src="/video.mp4" 
               type="video/mp4" 
             />
             Votre navigateur ne supporte pas la lecture de vidéos.
