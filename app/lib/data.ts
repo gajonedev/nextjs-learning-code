@@ -16,15 +16,12 @@ import { formatCurrency } from "./utils";
 // Fonction pour récupérer les revenues depuis la base de données
 export async function fetchRevenue() {
   try {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // On requête la base de données pour les revenues
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-    
-    // On retourne les donneés obtenues
+
     return data.rows;
   } catch (error) {
-    // En cas d'erreur ....
     console.error("Database Error:", error);
     throw new Error("Failed to fetch revenue data.");
   }
@@ -33,9 +30,8 @@ export async function fetchRevenue() {
 // Fonction pour récupérer les latest invoices depuis la base de données
 export async function fetchLatestInvoices() {
   try {
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    // On requête la base de données pour les latest invoices
     const data = await sql<LatestInvoiceRaw>`
     SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -43,7 +39,6 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
-    // On optimise les latest invoices en convertissant leurs amount de manière appropriée
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
       amount: formatCurrency(invoice.amount),
@@ -63,35 +58,26 @@ export async function fetchCardData() {
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
 
-    // Logique pour récupérer le nombre total d'invoice
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
-    // Logique pour récupérer le nombre total de customers
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    // Logique pour récupérer le nombre total d'invoice "paid" ou "pending"
     const invoiceStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
          SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
          FROM invoices`;
 
-    //  await new Promise((resolve) => setTimeout(resolve, 1000));
+     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // On rassemble toutes les logiques de récupération dans une promesse pour garantir leur resolution en simultanée
     const data = await Promise.all([
       invoiceCountPromise,
       customerCountPromise,
       invoiceStatusPromise,
     ]);
 
-    // On filtre le nombre total d'invoices
     const numberOfInvoices = Number(data[0].rows[0].count ?? "0");
-    // On filtre le nombre total de customers
     const numberOfCustomers = Number(data[1].rows[0].count ?? "0");
-    // On filtre le nombre total d'invoices "paid"
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? "0");
-    // On filtre le nombre total d'invoices "pending"
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? "0");
 
-    // La fonction retourne toutes ces valeurs
     return {
       numberOfCustomers,
       numberOfInvoices,
@@ -99,24 +85,22 @@ export async function fetchCardData() {
       totalPendingInvoices,
     };
   } catch (error) {
-    // En cas d'erreur ...
     console.error("Database Error:", error);
     throw new Error("Failed to fetch card data.");
   }
 }
 
-// Nombre d'invoice par page
 const ITEMS_PER_PAGE = 6;
-// Fonction de requêtage de la base de donneés
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number
 ) {
-  //
+
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    // Requêtage de la base de donneés
     const invoices = await sql<InvoicesTable>`
       SELECT
         invoices.id,
@@ -138,7 +122,6 @@ export async function fetchFilteredInvoices(
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    // On retourne les ivoices recupérés
     return invoices.rows;
   } catch (error) {
     // En cas d'erreur ...
@@ -150,7 +133,8 @@ export async function fetchFilteredInvoices(
 // Fonction pour récupérer le nombre total de pages à afficher pour les invoices
 export async function fetchInvoicesPages(query: string) {
   try {
-    // Logique SQL pour requêter la base de données
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const count = await sql`SELECT COUNT(*)
     FROM invoices
     JOIN customers ON invoices.customer_id = customers.id
@@ -162,13 +146,10 @@ export async function fetchInvoicesPages(query: string) {
       invoices.status ILIKE ${`%${query}%`}
   `;
 
-    // On calcule le nombre total de pages
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
 
-    // ON retourne le nombre total de pages
     return totalPages;
   } catch (error) {
-    // En cas d'erreur ...
     console.error("Database Error:", error);
     throw new Error("Failed to fetch total number of invoices.");
   }
@@ -177,7 +158,8 @@ export async function fetchInvoicesPages(query: string) {
 // Fonction pour récupérer une seule Invoice via son id
 export async function fetchInvoiceById(id: string) {
   try {
-    // On requête la base de données
+    await new Promise((r) => setTimeout(r, 2000));
+    
     const data = await sql<InvoiceForm>`
       SELECT
         invoices.id,
@@ -188,17 +170,14 @@ export async function fetchInvoiceById(id: string) {
       WHERE invoices.id = ${id};
     `;
 
-    // On filtre les données récupérées
     const invoice = data.rows.map((invoice) => ({
       ...invoice,
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
 
-    // On retourne les données récupérées
     return invoice[0];
   } catch (error) {
-    // En cas d'erreur ...
     console.error("Database Error:", error);
     throw new Error("Failed to fetch invoice.");
   }
@@ -207,7 +186,8 @@ export async function fetchInvoiceById(id: string) {
 // Fonction pour récupérer tous les customers disponibles
 export async function fetchCustomers() {
   try {
-    // Requêtage de la base de donneés
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const data = await sql<CustomerField>`
       SELECT
         id,
@@ -216,19 +196,18 @@ export async function fetchCustomers() {
       ORDER BY name ASC
     `;
 
-    // On filtre le donnée récupérée
     const customers = data.rows;
 
-    // On retourne la donnée recupérée
     return customers;
   } catch (err) {
-    // En cas d'erreur
     console.error("Database Error:", err);
     throw new Error("Failed to fetch all customers.");
   }
 }
 
 export async function fetchFilteredCustomers(query: string) {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   try {
     const data = await sql<CustomersTableType>`
 		SELECT

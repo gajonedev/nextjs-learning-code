@@ -6,7 +6,7 @@ import { lusitana } from "@/app/ui/fonts";
 import { CreateInvoice } from "@/app/ui/invoices/buttons";
 import Search from "@/app/ui/search";
 import Table from "@/app/ui/invoices/table";
-import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { InvoicesPaginationSkeleton, InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchInvoicesPages } from "@/app/lib/data";
 import Pagination from "@/app/ui/invoices/pagination";
@@ -49,7 +49,9 @@ export default async function Page({
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         {/* Pagination d'affichage des invoices */}
-        <Pagination totalPages={totalPages} />
+        <Suspense fallback={<InvoicesPaginationSkeleton />}>
+          <Pagination totalPages={totalPages} />
+        </Suspense>
       </div>
     </div>
   );

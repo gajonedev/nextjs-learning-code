@@ -2,6 +2,8 @@
  * Contient tout les skeletons de chargement des différents composants et pages
  */
 
+import { PlusIcon } from "@heroicons/react/24/outline";
+
 // Animation shimmer
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
@@ -51,10 +53,46 @@ export function RevenueChartSkeleton() {
   );
 }
 
+export function InvoicesPageSkeleton() {
+  return (
+    <div className="relative">
+      <div className="flex items-center justify-between">
+        {/* Skeleton du titre */}
+        <div className={`${shimmer} relative h-8 w-36 rounded-md bg-gray-100`} />
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        {/* Skeleton de la barre de recherche */}
+        <div className={`${shimmer} relative flex flex-1 flex-shrink-0 h-10 rounded-md bg-gray-100`} />
+        {/* Skeleton du bouton Create Invoice */}
+        <div className={`${shimmer} relative h-10 rounded-md bg-gray-100 px-4`}>
+          <div className="invisible flex">
+            <span className="">Create Invoice</span>{" "}
+            <PlusIcon className="h-5 md:ml-4" />
+          </div>
+        </div>
+      </div>
+
+      {/* Skeleton du tableau des invoices */}
+      <InvoicesTableSkeleton />
+
+      {/* Skeleton de la pagination */}
+      <InvoicesPaginationSkeleton />
+    </div>
+  );
+}
+
+export function InvoicesPaginationSkeleton() {
+  return (
+    <div className="mt-5 flex relative justify-center">
+      <div className={`${shimmer} relative h-10 w-72 rounded-md bg-gray-100`} />
+    </div>
+  )
+}
+
 // Skeleton d'un invoice
 export function InvoiceSkeleton() {
   return (
-    <div className="flex flex-row items-center justify-between border-b border-gray-100 py-4">
+    <div className={`${shimmer} relative flex flex-row items-center justify-between border-b border-gray-100 py-4`}>
       <div className="flex items-center">
         <div className="mr-2 h-8 w-8 rounded-full bg-gray-200" />
         <div className="min-w-0">
@@ -119,31 +157,31 @@ export function TableRowSkeleton() {
       {/* Customer Name and Image */}
       <td className="relative overflow-hidden whitespace-nowrap py-3 pl-6 pr-3">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-gray-100"></div>
-          <div className="h-6 w-24 rounded bg-gray-100"></div>
+          <div className={`${shimmer} relative h-8 w-8 rounded-full bg-gray-100`} />
+          <div className={`${shimmer} relative h-6 w-24 rounded bg-gray-100`} />
         </div>
       </td>
       {/* Email */}
       <td className="whitespace-nowrap px-3 py-3">
-        <div className="h-6 w-32 rounded bg-gray-100"></div>
+        <div className={`${shimmer} relative h-6 w-32 rounded bg-gray-100`} />
       </td>
       {/* Amount */}
       <td className="whitespace-nowrap px-3 py-3">
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
+        <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
       </td>
       {/* Date */}
       <td className="whitespace-nowrap px-3 py-3">
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
+        <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
       </td>
       {/* Status */}
       <td className="whitespace-nowrap px-3 py-3">
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
+        <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
       </td>
       {/* Actions */}
       <td className="whitespace-nowrap py-3 pl-6 pr-3">
         <div className="flex justify-end gap-3">
-          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
-          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
+          <div className={`${shimmer} relative h-[38px] w-[38px] rounded bg-gray-100`} />
+          <div className={`${shimmer} relative h-[38px] w-[38px] rounded bg-gray-100`} />
         </div>
       </td>
     </tr>
@@ -156,19 +194,19 @@ export function InvoicesMobileSkeleton() {
     <div className="mb-2 w-full rounded-md bg-white p-4">
       <div className="flex items-center justify-between border-b border-gray-100 pb-8">
         <div className="flex items-center">
-          <div className="mr-2 h-8 w-8 rounded-full bg-gray-100"></div>
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
+          <div className={`${shimmer} relative mr-2 h-8 w-8 rounded-full bg-gray-100`} />
+          <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
         </div>
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
+        <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
       </div>
       <div className="flex w-full items-center justify-between pt-4">
         <div>
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
-          <div className="mt-2 h-6 w-24 rounded bg-gray-100"></div>
+          <div className={`${shimmer} relative h-6 w-16 rounded bg-gray-100`} />
+          <div className={`${shimmer} relative mt-2 h-6 w-24 rounded bg-gray-100`} />
         </div>
         <div className="flex justify-end gap-2">
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
+          <div className={`${shimmer} relative h-10 w-10 rounded bg-gray-100`} />
+          <div className={`${shimmer} relative h-10 w-10 rounded bg-gray-100`} />
         </div>
       </div>
     </div>
@@ -180,7 +218,7 @@ export function InvoicesTableSkeleton() {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="relative rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
             <InvoicesMobileSkeleton />
             <InvoicesMobileSkeleton />
@@ -226,6 +264,124 @@ export function InvoicesTableSkeleton() {
           </table>
         </div>
       </div>
+    </div>
+  );
+}
+
+
+export function CustomerMobileSkeleton() {
+  return (
+    <div className="mb-2 w-full rounded-md bg-white p-4">
+      <div className="flex items-center justify-between border-b pb-4">
+        <div>
+          <div className="mb-2 flex items-center">
+            <div className="flex items-center gap-3">
+              <div className={`${shimmer} relative h-8 w-8 rounded-full bg-gray-100`} />
+              <div className={`${shimmer} relative h-5 w-24 rounded-md bg-gray-100`} />
+            </div>
+          </div>
+          <div className={`${shimmer} relative h-4 w-32 rounded-md bg-gray-100`} />
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-between border-b py-5">
+        <div className="flex w-1/2 flex-col">
+          <div className={`${shimmer} relative h-4 w-10 rounded-md bg-gray-100`} />
+          <div className={`${shimmer} relative mt-1 h-5 w-16 rounded-md bg-gray-100`} />
+        </div>
+        <div className="flex w-1/2 flex-col">
+          <div className={`${shimmer} relative h-4 w-10 rounded-md bg-gray-100`} />
+          <div className={`${shimmer} relative mt-1 h-5 w-16 rounded-md bg-gray-100`} />
+        </div>
+      </div>
+      <div className="pt-4">
+        <div className={`${shimmer} relative h-5 w-24 rounded-md bg-gray-100`} />
+      </div>
+    </div>
+  );
+}
+
+// Skeleton pour une ligne du tableau des clients
+export function CustomerRowSkeleton() {
+  return (
+    <tr className="w-full border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
+      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm">
+        <div className="flex items-center gap-3">
+          <div className={`${shimmer} relative h-8 w-8 rounded-full bg-gray-100`} />
+          <div className={`${shimmer} relative h-5 w-24 rounded-md bg-gray-100`} />
+        </div>
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className={`${shimmer} relative h-5 w-32 rounded-md bg-gray-100`} />
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className={`${shimmer} relative h-5 w-10 rounded-md bg-gray-100`} />
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className={`${shimmer} relative h-5 w-16 rounded-md bg-gray-100`} />
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className={`${shimmer} relative h-5 w-16 rounded-md bg-gray-100`} />
+      </td>
+    </tr>
+  );
+}
+
+// Skeleton de la table des clients
+export function CustomersTableSkeleton() {
+  return (
+    <div className="mt-6 flow-root">
+      <div className="overflow-x-auto">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0">
+            <div className="md:hidden">
+              <CustomerMobileSkeleton />
+              <CustomerMobileSkeleton />
+              <CustomerMobileSkeleton />
+              <CustomerMobileSkeleton />
+            </div>
+            <table className="hidden min-w-full rounded-md text-gray-900 md:table">
+              <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
+                <tr>
+                  <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                    Name
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Email
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Total Invoices
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Total Pending
+                  </th>
+                  <th scope="col" className="px-4 py-5 font-medium">
+                    Total Paid
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 text-gray-900">
+                <CustomerRowSkeleton />
+                <CustomerRowSkeleton />
+                <CustomerRowSkeleton />
+                <CustomerRowSkeleton />
+                <CustomerRowSkeleton />
+                <CustomerRowSkeleton />
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Skeleton complet de la page des clients
+export function CustomersPageSkeleton() {
+  return (
+    <div className="w-full">
+      <div className={`${shimmer} relative mb-8 h-8 w-36 rounded-md bg-gray-100`} />
+      <div className={`${shimmer} relative flex flex-1 h-10 rounded-md bg-gray-100`} />
+      <CustomersTableSkeleton />
     </div>
   );
 }

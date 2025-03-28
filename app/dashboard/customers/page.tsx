@@ -1,5 +1,6 @@
 import { fetchFilteredCustomers } from "@/app/lib/data";
 import CustomersTable from "@/app/ui/customers/table";
+import { CustomersTableSkeleton } from "@/app/ui/skeletons";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -20,7 +21,7 @@ export default async function Page({
 
   return (
     <section>
-      <Suspense key={query} fallback="Loading">
+      <Suspense key={query} fallback={<CustomersTableSkeleton />}>
         <CustomersTable customers={customers} />
       </Suspense>
     </section>
